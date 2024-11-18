@@ -47,3 +47,8 @@ variable "max_capacity" {
   description = "Maximum number of web instances in Auto Scaling Group"
   default     = 10
 }
+
+variable "availability_zones" {
+  description = "List of availability zones for IDS/IPS instances"
+  default     = ["ap-northeast-2a", "ap-northeast-2c"]
+}

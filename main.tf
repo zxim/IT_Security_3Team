@@ -28,6 +28,7 @@ module "compute" {
   security_group_web   = module.security.web_sg
   security_group_bastion = module.security.bastion_sg
   ssh_key_name         = var.ssh_key_name
+  availability_zones   = ["ap-northeast-2a", "ap-northeast-2c"] # 가용영역 지정
 }
 
 # ALB 모듈 호출
@@ -46,18 +47,19 @@ module "rds" {
   security_group_rds   = module.security.rds_sg
 }
 
+# Bastion Host 출력
 output "bastion_instance_id" {
   description = "ID of the Bastion Host instance"
   value       = module.compute.bastion_instance_id
 }
 
-# Output 모듈 호출
-output "ids_ips_instance_id" {
-  description = "ID of the IDS/IPS instance"
-  value       = module.compute.ids_ips_instance_id
+# IDS/IPS 출력
+output "ids_instance_ids" {
+  description = "List of IDs for IDS/IPS instances across AZs"
+  value       = module.compute.ids_instance_ids
 }
 
-output "ids_ips_private_ip" {
-  description = "Private IP of the IDS/IPS instance"
-  value       = module.compute.ids_ips_private_ip
+output "ids_instance_private_ips" {
+  description = "List of private IPs for IDS/IPS instances across AZs"
+  value       = module.compute.ids_instance_private_ips
 }

@@ -29,7 +29,7 @@ resource "aws_autoscaling_group" "web_asg" {
   vpc_zone_identifier = var.private_web_subnets
   min_size            = 2
   max_size            = 10
-  desired_capacity    = 3
+  desired_capacity    = 2
 
   tag {
     key                 = "Name"
@@ -104,13 +104,14 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_instance" "ids_instance" {
-  ami           = "ami-040c33c6a51fd5d96" # Ubuntu AMI
+  count         = length(var.availability_zones)
+  ami           = "ami-040c33c6a51fd5d96"
   instance_type = "t3.micro"
+  subnet_id     = element(var.private_web_subnets, count.index)
   key_name      = var.ssh_key_name
-  subnet_id     = var.private_web_subnets[0] # IDS를 배치할 서브넷
-  vpc_security_group_ids = [var.security_group_web] # 적절한 Security Group
+  vpc_security_group_ids = [var.security_group_web]
 
   tags = {
-    Name = "ids-instance"
+    Name = "ids-instance-${count.index}"
   }
 }

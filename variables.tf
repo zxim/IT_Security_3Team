@@ -14,4 +14,3 @@ variable "ssh_key_name" {
   description = "Key pair for the Bastion host"
   type        = string
 }
-
