@@ -113,8 +113,8 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_security_group" "ids_sg" {
-  name_prefix = "ids-sg"
-  description = "Allow traffic for IDS/IPS"
+  name        = "ids-sg"
+  description = "Security group for IDS/IPS instances"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -139,6 +139,6 @@ resource "aws_security_group" "ids_sg" {
   }
 
   tags = {
-    Name = "IDS-IPS-SG"
+    Name = "ids-security-group"
   }
 }

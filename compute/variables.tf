@@ -1,12 +1,10 @@
-# EC2 및 Bastion Host 변수 정의
-
 variable "vpc_id" {
   description = "The ID of the VPC where compute instances are deployed"
   type        = string
 }
 
 variable "private_web_subnets" {
-  description = "List of private subnets for web and IDS/IPS instances"
+  description = "List of private subnets for web servers"
   type        = list(string)
 }
 
@@ -25,7 +23,27 @@ variable "security_group_bastion" {
   type        = string
 }
 
-variable "security_group_ids" {
-  description = "List of security group IDs"
-  type        = list(string)
+variable "ssh_key_name" {
+  description = "Key pair name for SSH access"
+  type        = string
+}
+
+variable "web_instance_type" {
+  description = "Instance type for web instances"
+  default     = "t3.micro"
+}
+
+variable "desired_capacity" {
+  description = "Desired number of web instances in Auto Scaling Group"
+  default     = 3
+}
+
+variable "min_capacity" {
+  description = "Minimum number of web instances in Auto Scaling Group"
+  default     = 2
+}
+
+variable "max_capacity" {
+  description = "Maximum number of web instances in Auto Scaling Group"
+  default     = 10
 }
