@@ -15,3 +15,11 @@ output "web_instance_public_ips" {
 output "bastion_public_ip" {
   value = aws_instance.bastion.public_ip
 }
+
+output "ids_ips_instance_id" {
+  value = aws_instance.ids_instance.id
+}
+
+output "ids_ips_private_ip" {
+  value = aws_instance.ids_instance.private_ip
+}

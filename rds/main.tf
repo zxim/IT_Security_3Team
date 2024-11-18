@@ -24,6 +24,7 @@ resource "aws_db_instance" "main" {
   publicly_accessible    = false
   vpc_security_group_ids = [var.security_group_rds]
   db_subnet_group_name   = aws_db_subnet_group.main.name
+  skip_final_snapshot    = true
 
   tags = {
     Name = "rds-instance"

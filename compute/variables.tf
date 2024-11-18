@@ -6,7 +6,7 @@ variable "vpc_id" {
 }
 
 variable "private_web_subnets" {
-  description = "List of private subnets for web servers"
+  description = "List of private subnets for web and IDS/IPS instances"
   type        = list(string)
 }
 
@@ -23,4 +23,9 @@ variable "security_group_web" {
 variable "security_group_bastion" {
   description = "Security group for the bastion host"
   type        = string
+}
+
+variable "security_group_ids" {
+  description = "List of security group IDs"
+  type        = list(string)
 }

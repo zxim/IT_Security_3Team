@@ -27,7 +27,9 @@ module "compute" {
   public_subnets       = module.vpc.public_subnets
   security_group_web   = module.security.web_sg
   security_group_bastion = module.security.bastion_sg
+  security_group_ids   = [module.security.web_sg, module.security.bastion_sg] # 필요한 Security Group IDs 추가
 }
+
 
 # ALB 모듈 호출
 module "alb" {
