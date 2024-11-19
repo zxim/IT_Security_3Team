@@ -104,14 +104,12 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_instance" "ids_instance" {
-  count         = length(var.availability_zones)
-  ami           = "ami-040c33c6a51fd5d96"
-  instance_type = "t3.micro"
-  subnet_id     = element(var.private_web_subnets, count.index)
-  key_name      = var.ssh_key_name
-  vpc_security_group_ids = [var.security_group_web]
+  ami             = "ami-040c33c6a51fd5d96"  # 예시 AMI ID
+  instance_type   = "t3.micro"
+  availability_zone = var.availability_zones[0]  # 1개 AZ만 사용
+  subnet_id       = var.private_web_subnets[0]  # Subnet을 적절히 지정
 
   tags = {
-    Name = "ids-instance-${count.index}"
+    Name = "ids-instance"
   }
 }

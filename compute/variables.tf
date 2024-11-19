@@ -50,5 +50,6 @@ variable "max_capacity" {
 
 variable "availability_zones" {
   description = "List of availability zones for IDS/IPS instances"
-  default     = ["ap-northeast-2a", "ap-northeast-2c"]
+  default     = ["ap-northeast-2a"]  # 1개로 변경
 }
+

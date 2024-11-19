@@ -28,8 +28,9 @@ module "compute" {
   security_group_web   = module.security.web_sg
   security_group_bastion = module.security.bastion_sg
   ssh_key_name         = var.ssh_key_name
-  availability_zones   = ["ap-northeast-2a", "ap-northeast-2c"] # 가용영역 지정
+  availability_zones   = ["ap-northeast-2a"]  # AZ를 1개로 수정
 }
+
 
 # ALB 모듈 호출
 module "alb" {
