@@ -38,3 +38,13 @@ variable "alb_https_port" {
   type        = number
   default     = 443 # Default HTTPS port
 }
+
+variable "web1_private_ip" {
+  description = "Private IP of Web Server 1"
+  type        = string
+}
+
+variable "web2_private_ip" {
+  description = "Private IP of Web Server 2"
+  type        = string
+}

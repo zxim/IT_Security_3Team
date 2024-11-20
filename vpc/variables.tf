@@ -1,39 +1,58 @@
+# VPC CIDR
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
+  default     = "192.168.0.0/16" # 기본 VPC CIDR
 }
 
-variable "public_subnet_cidr" {
-  description = "CIDR block for the public subnet"
+# 퍼블릭 서브넷 CIDR 및 AZ
+variable "public_subnet_cidr_az1" {
+  description = "CIDR block for the public subnet in AZ1"
   type        = string
-  default     = "192.168.1.0/24" # 기본값 설정 (필요 시 수정)
+  default     = "192.168.1.0/24"
 }
 
-variable "private_web_subnet_cidr" {
-  description = "CIDR block for the private subnet used by web servers and IDS"
+variable "public_subnet_cidr_az2" {
+  description = "CIDR block for the public subnet in AZ2"
   type        = string
-  default     = "192.168.2.0/24" # 기본값 설정 (필요 시 수정)
+  default     = "192.168.2.0/24"
 }
 
-variable "private_rds_subnet_cidr" {
-  description = "CIDR block for the private subnet used by RDS"
+# 프라이빗 웹 서브넷 CIDR 및 AZ
+variable "private_web_subnet_cidr_az1" {
+  description = "CIDR block for the private web subnet in AZ1"
   type        = string
-  default     = "192.168.3.0/24" # 기본값 설정 (필요 시 수정)
+  default     = "192.168.10.0/24" # 충돌 방지를 위해 CIDR 수정
 }
 
-variable "nat_instance_type" {
-  description = "Instance type for the NAT instance"
+variable "private_web_subnet_cidr_az2" {
+  description = "CIDR block for the private web subnet in AZ2"
   type        = string
-  default     = "t3.micro"
+  default     = "192.168.11.0/24" # 충돌 방지를 위해 CIDR 수정
 }
 
+# 프라이빗 RDS 서브넷 CIDR 및 AZ
+variable "private_rds_subnet_cidr_az1" {
+  description = "CIDR block for the private RDS subnet in AZ1"
+  type        = string
+  default     = "192.168.20.0/24" # 충돌 방지를 위해 CIDR 수정
+}
+
+variable "private_rds_subnet_cidr_az2" {
+  description = "CIDR block for the private RDS subnet in AZ2"
+  type        = string
+  default     = "192.168.21.0/24" # 충돌 방지를 위해 CIDR 수정
+}
+
+# SSH 키 이름
 variable "ssh_key_name" {
   description = "Key name for accessing instances"
   type        = string
 }
 
-variable "availability_zone" {
-  description = "Availability zone to deploy resources"
+# 환경 태그
+variable "environment" {
+  description = "Environment tag for resources (e.g., dev, staging, prod)"
   type        = string
-  default     = "ap-northeast-2a"
+  default     = "dev" # 기본값으로 개발 환경 설정
 }

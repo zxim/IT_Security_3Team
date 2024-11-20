@@ -1,55 +1,61 @@
-# VPC 관련 출력값
+# VPC 출력
 output "vpc_id" {
-  description = "VPC 모듈에서 생성된 VPC의 ID"
+  description = "VPC의 ID"
   value       = module.vpc.vpc_id
 }
 
-output "public_subnets" {
-  description = "VPC 모듈에서 생성된 퍼블릭 서브넷의 ID 목록"
-  value       = module.vpc.public_subnets
+# 퍼블릭 서브넷 출력 (AZ1, AZ2 개별적으로 출력)
+output "public_subnet_az1_id" {
+  description = "퍼블릭 서브넷 AZ1의 ID"
+  value       = module.vpc.public_subnet_az1_id
 }
 
-output "private_web_subnets" {
-  description = "웹 서버와 IDS/IPS를 위한 프라이빗 서브넷의 ID 목록"
-  value       = module.vpc.private_web_subnets
+output "public_subnet_az2_id" {
+  description = "퍼블릭 서브넷 AZ2의 ID"
+  value       = module.vpc.public_subnet_az2_id
 }
 
-output "private_rds_subnets" {
-  description = "RDS를 위한 프라이빗 서브넷의 ID 목록"
-  value       = module.vpc.private_rds_subnets
+# 웹 서버 서브넷 출력 (AZ1, AZ2 개별적으로 출력)
+output "private_web_subnet_az1_id" {
+  description = "웹 서버 서브넷 AZ1의 ID"
+  value       = module.vpc.private_web_subnet_az1_id
 }
 
-# Bastion Host 출력값
-output "bastion_instance_id" {
-  description = "Bastion Host 인스턴스의 ID"
-  value       = module.compute.bastion_instance_id
+output "private_web_subnet_az2_id" {
+  description = "웹 서버 서브넷 AZ2의 ID"
+  value       = module.vpc.private_web_subnet_az2_id
 }
 
-output "bastion_public_ip" {
-  description = "Bastion Host 인스턴스의 퍼블릭 IP 주소"
-  value       = module.compute.bastion_public_ip
+# RDS 서브넷 출력 (AZ1, AZ2 개별적으로 출력)
+output "private_rds_subnet_az1_id" {
+  description = "RDS 서브넷 AZ1의 ID"
+  value       = module.vpc.private_rds_subnet_az1_id
 }
 
-# IDS/IPS 출력값
-output "ids_instance_ids" {
-  description = "List of IDs for IDS/IPS instances created by the Compute module"
-  value       = module.compute.ids_instance_ids
+output "private_rds_subnet_az2_id" {
+  description = "RDS 서브넷 AZ2의 ID"
+  value       = module.vpc.private_rds_subnet_az2_id
 }
 
-output "ids_instance_private_ips" {
-  description = "List of private IPs for IDS/IPS instances created by the Compute module"
-  value       = module.compute.ids_instance_private_ips
-}
-
-
-# ALB 출력값
+# ALB 출력
 output "alb_dns_name" {
-  description = "애플리케이션 로드 밸런서(ALB)의 DNS 이름"
+  description = "ALB의 DNS 이름"
   value       = module.alb.alb_dns_name
 }
 
-# RDS 출력값
+# Compute 출력
+output "web_instance_ids" {
+  description = "웹 서버 인스턴스의 ID 목록"
+  value       = module.compute.web_instance_ids
+}
+
+output "web_instance_private_ips" {
+  description = "웹 서버 인스턴스의 프라이빗 IP 목록"
+  value       = module.compute.web_instance_private_ips
+}
+
+# RDS 출력
 output "rds_endpoint" {
-  description = "RDS 인스턴스의 엔드포인트 URL"
+  description = "RDS 엔드포인트"
   value       = module.rds.rds_endpoint
 }

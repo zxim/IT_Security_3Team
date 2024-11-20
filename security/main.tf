@@ -66,6 +66,17 @@ resource "aws_security_group_rule" "web_from_alb_https" {
   source_security_group_id = aws_security_group.alb.id
 }
 
+resource "aws_security_group_rule" "web_from_ids" {
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.web.id
+  source_security_group_id = aws_security_group.ids.id
+
+  description = "Allow HTTP traffic from IDS/IPS to Web Servers"
+}
+
 # Bastion Security Group
 resource "aws_security_group" "bastion" {
   name        = "${var.environment}-bastion-sg"
@@ -97,6 +108,22 @@ resource "aws_security_group" "rds" {
   description = "Allow MySQL traffic to RDS"
   vpc_id      = var.vpc_id
 
+  # MySQL 접근 허용: 웹 서버 1
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["${var.web1_private_ip}/32"]
+  }
+
+  # MySQL 접근 허용: 웹 서버 2
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["${var.web2_private_ip}/32"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -109,6 +136,7 @@ resource "aws_security_group" "rds" {
   }
 }
 
+
 resource "aws_security_group_rule" "rds_from_web" {
   type                     = "ingress"
   from_port                = 3306
@@ -116,6 +144,8 @@ resource "aws_security_group_rule" "rds_from_web" {
   protocol                 = "tcp"
   security_group_id        = aws_security_group.rds.id
   source_security_group_id = aws_security_group.web.id
+
+  description = "Allow MySQL traffic from Web Servers"
 }
 
 # IDS Security Group
