@@ -5,6 +5,7 @@ resource "aws_instance" "web1" {
   instance_type         = var.web_instance_type
   subnet_id             = var.private_web_subnet_az1
   vpc_security_group_ids = [var.security_group_web]
+  key_name              = var.ssh_key_name
 
   tags = {
     Name = "${var.environment}-web-server-1"
@@ -16,6 +17,7 @@ resource "aws_instance" "web2" {
   instance_type         = var.web_instance_type
   subnet_id             = var.private_web_subnet_az2
   vpc_security_group_ids = [var.security_group_web]
+  key_name              = var.ssh_key_name
 
   tags = {
     Name = "${var.environment}-web-server-2"
