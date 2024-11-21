@@ -12,8 +12,11 @@ module "vpc" {
   private_rds_subnet_cidr_az1 = var.private_rds_subnets[0]
   private_rds_subnet_cidr_az2 = var.private_rds_subnets[1]
   environment                = var.environment
-  route53_domain_name        = var.route53_domain_name  # 추가
+  route53_domain_name        = var.route53_domain_name
+  alb_dns_name               = module.alb.alb_dns_name   # ALB 모듈에서 값 전달
+  alb_zone_id                = module.alb.alb_zone_id    # ALB 모듈에서 값 전달
 }
+
 
 module "security" {
   source        = "./security"
