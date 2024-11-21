@@ -29,3 +29,15 @@ output "bastion_sg" {
   description = "Security Group ID for Bastion Host"
   value       = aws_security_group.bastion.id
 }
+
+# WAF ACL ARN 출력
+output "waf_acl_arn" {
+  description = "ARN of the WAF ACL"
+  value       = aws_wafv2_web_acl.waf.arn
+}
+
+# WAF와 ALB 연결 출력
+output "waf_alb_association" {
+  description = "Association of WAF ACL with ALB"
+  value       = aws_wafv2_web_acl_association.waf_alb.id
+}

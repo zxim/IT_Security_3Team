@@ -43,7 +43,7 @@ output "public_subnet_cidr_az1" {
 output "public_subnet_cidr_az2" {
   description = "Public subnet AZ2 ID"
   value       = aws_subnet.public_az2.id
-} 
+}
 
 # 프라이빗 애플리케이션 서브넷 출력
 output "private_web_subnet_cidr_az1" {
@@ -54,4 +54,22 @@ output "private_web_subnet_cidr_az1" {
 output "private_web_subnet_cidr_az2" {
   description = "Private web subnet AZ2 ID"
   value       = aws_subnet.private_app_az2.id
+}
+
+# Route 53 Hosted Zone ID 출력
+output "route53_zone_id" {
+  description = "The ID of the Route 53 Hosted Zone"
+  value       = aws_route53_zone.main.zone_id
+}
+
+# Route 53 A 레코드 이름 출력
+output "route53_record_name" {
+  description = "The name of the Route 53 A Record"
+  value       = aws_route53_record.www.name
+}
+
+# Route 53 A 레코드 도메인 출력
+output "route53_record_domain" {
+  description = "The full domain name for the A Record"
+  value       = "${aws_route53_record.www.name}.${aws_route53_zone.main.name}"
 }

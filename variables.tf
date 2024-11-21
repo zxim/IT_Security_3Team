@@ -19,50 +19,47 @@ variable "environment" {
   default     = "dev"
 }
 
-# SSH Key Name
+# SSH Key Names
 variable "ssh_key_name_bastion" {
-  description = "SSH key pair name"
+  description = "SSH key pair name for Bastion host"
   type        = string
 }
 
 variable "ssh_key_name_web" {
-  description = "SSH key pair name"
+  description = "SSH key pair name for Web servers"
   type        = string
 }
 
 variable "ssh_key_name_app" {
-  description = "SSH key pair name"
+  description = "SSH key pair name for Application servers"
   type        = string
 }
 
-# Public Subnets
+# Subnet CIDRs
 variable "public_subnets" {
   description = "Public subnet CIDR blocks"
   type        = list(string)
   default     = ["192.168.1.0/24", "192.168.4.0/24"]
 }
 
-# Private Web Subnets
 variable "private_web_subnets" {
-  description = "Private subnet CIDR blocks for web servers"
+  description = "Private subnet CIDR blocks for Web servers"
   type        = list(string)
   default     = ["192.168.2.0/24", "192.168.5.0/24"]
 }
 
-# Private RDS Subnets
 variable "private_rds_subnets" {
   description = "Private subnet CIDR blocks for RDS"
   type        = list(string)
   default     = ["192.168.3.0/24", "192.168.6.0/24"]
 }
 
-# Database Username
+# Database Access
 variable "db_username" {
   description = "Username for the RDS instance"
   type        = string
 }
 
-# Database Password
 variable "db_password" {
   description = "Password for the RDS instance"
   type        = string
@@ -76,6 +73,7 @@ variable "allowed_ssh_cidr" {
   default     = "0.0.0.0/0"
 }
 
+# ALB Traffic Ports
 variable "alb_http_port" {
   description = "Port for ALB HTTP traffic"
   type        = number
@@ -86,4 +84,40 @@ variable "alb_https_port" {
   description = "Port for ALB HTTPS traffic"
   type        = number
   default     = 443
+}
+
+# CloudFront Settings
+variable "cloudfront_price_class" {
+  description = "CloudFront price class (e.g., PriceClass_100, PriceClass_200, PriceClass_All)"
+  default     = "PriceClass_100"
+}
+
+variable "acm_certificate_arn" {
+  description = "ARN of the ACM certificate for HTTPS"
+  type        = string
+}
+
+# WAF Settings
+variable "waf_acl_name" {
+  description = "Name of the WAF ACL"
+  type        = string
+  default     = "default-waf-acl"
+}
+
+variable "waf_managed_rule_groups" {
+  description = "List of WAF managed rule groups"
+  type        = list(object({
+    name        = string
+    vendor_name = string
+  }))
+  default = [
+    {
+      name        = "AWSManagedRulesCommonRuleSet"
+      vendor_name = "AWS"
+    },
+    {
+      name        = "AWSManagedRulesSQLiRuleSet"
+      vendor_name = "AWS"
+    }
+  ]
 }

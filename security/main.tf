@@ -167,3 +167,68 @@ resource "aws_security_group_rule" "web_from_alb_http" {
   security_group_id        = aws_security_group.web.id
   source_security_group_id = aws_security_group.alb.id
 }
+# WAF ACL 생성 (Regional: ALB용)
+resource "aws_wafv2_web_acl" "waf" {
+  name  = "${var.environment}-waf-acl"
+  scope = "REGIONAL"  # ALB에 적용하기 위한 설정 (CloudFront 사용 시 CLOUDFRONT)
+
+  # 기본 동작: 허용
+  default_action {
+    allow {}
+  }
+
+  # WAF 관리형 규칙 추가 (SQLi, XSS 방지 등)
+  rule {
+    name     = "AWSManagedRulesCommonRuleSet"
+    priority = 1
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesCommonRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+    override_action {
+      none {}
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "commonRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  rule {
+    name     = "AWSManagedRulesSQLiRuleSet"
+    priority = 2
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesSQLiRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+    override_action {
+      none {}
+    }
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "SQLiRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "web-acl"
+    sampled_requests_enabled   = true
+  }
+
+  tags = {
+    Name = "${var.environment}-waf"
+  }
+}
+
+# WAF ACL을 ALB에 연결
+resource "aws_wafv2_web_acl_association" "waf_alb" {
+  resource_arn = aws_alb.app.arn  # ALB의 ARN (위에 정의된 ALB 리소스와 연결)
+  web_acl_arn  = aws_wafv2_web_acl.waf.arn  # 생성한 WAF ACL의 ARN
+}

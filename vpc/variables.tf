@@ -37,3 +37,9 @@ variable "private_web_subnet_cidr_az2" {
   description = "CIDR block for private web subnet in AZ2"
   type        = string
 }
+
+# Route 53 도메인 변수 추가
+variable "route53_domain_name" {
+  description = "The domain name to use in Route 53 (e.g., mymain.click)"
+  type        = string
+}

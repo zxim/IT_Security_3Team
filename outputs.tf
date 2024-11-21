@@ -64,3 +64,25 @@ output "rds_security_group_id" {
   description = "The security group ID for the RDS instance"
   value       = module.security.rds_sg
 }
+
+# CloudFront Outputs
+output "cloudfront_distribution_id" {
+  description = "The ID of the CloudFront Distribution"
+  value       = module.cloudfront.distribution_id
+}
+
+output "cloudfront_domain_name" {
+  description = "The domain name of the CloudFront Distribution"
+  value       = module.cloudfront.domain_name
+}
+
+# WAF Outputs (Updated)
+output "waf_acl_arn" {
+  description = "The ARN of the WAF ACL"
+  value       = module.security.waf_acl_arn  # security 모듈에서 가져오기
+}
+
+output "waf_alb_association" {
+  description = "The ID of the WAF association with ALB"
+  value       = module.security.waf_alb_association  # security 모듈에서 가져오기
+}

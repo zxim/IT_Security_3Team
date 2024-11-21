@@ -92,3 +92,48 @@ variable "db_password" {
   type        = string
   sensitive   = true
 }
+
+# WAF ACL 이름
+variable "waf_acl_name" {
+  description = "Name of the WAF ACL"
+  type        = string
+  default     = "default-waf-acl"
+}
+
+# WAF 규칙 우선순위
+variable "waf_rule_priority" {
+  description = "Default priority for WAF rules"
+  type        = number
+  default     = 1
+}
+
+# WAF 관리형 규칙 그룹
+variable "waf_managed_rule_groups" {
+  description = "List of WAF managed rule groups to apply"
+  type        = list(object({
+    name        = string
+    vendor_name = string
+  }))
+  default = [
+    {
+      name        = "AWSManagedRulesCommonRuleSet"
+      vendor_name = "AWS"
+    },
+    {
+      name        = "AWSManagedRulesSQLiRuleSet"
+      vendor_name = "AWS"
+    }
+  ]
+}
+
+# ALB ARN
+variable "alb_arn" {
+  description = "The ARN of the Application Load Balancer"
+  type        = string
+}
+
+# CloudFront Distribution ID
+variable "cloudfront_distribution_id" {
+  description = "The ID of the CloudFront Distribution"
+  type        = string
+}

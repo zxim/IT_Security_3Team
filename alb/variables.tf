@@ -7,6 +7,7 @@ variable "public_subnets" {
 
 variable "security_group_alb" {
   description = "ALB용 보안 그룹 ID"
+  type        = string
 }
 
 variable "vpc_id" {
@@ -15,6 +16,22 @@ variable "vpc_id" {
 }
 
 variable "environment" {
-  description = "Environment name (e.g., dev, prod)"
+  description = "Environment name (e.g., dev, staging, prod)"
+  type        = string
+}
+
+variable "acm_certificate_arn" {
+  description = "ARN of the ACM certificate for HTTPS"
+  type        = string
+}
+
+variable "s3_logging_bucket" {
+  description = "S3 bucket for CloudFront logs"
+  type        = string
+}
+
+# ALB ARN 추가 (Main.tf에서 전달)
+variable "alb_arn" {
+  description = "ARN of the Application Load Balancer"
   type        = string
 }

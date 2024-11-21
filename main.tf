@@ -24,6 +24,10 @@ module "security" {
 
   db_username = var.db_username
   db_password = var.db_password
+
+  # WAF 관련 추가
+  alb_arn                     = module.alb.alb_arn
+  cloudfront_distribution_id  = module.cloudfront.distribution_id
 }
 
 module "compute" {
@@ -57,4 +61,12 @@ module "rds" {
   private_rds_az2    = module.vpc.private_rds_subnet_az2_id
   db_username        = var.db_username
   db_password        = var.db_password
+}
+
+module "cloudfront" {
+  source                  = "./cloudfront"  # CloudFront 관련 디렉토리
+  alb_dns_name            = module.alb.alb_dns_name  # ALB의 DNS 이름을 Origin으로 설정
+  environment             = var.environment
+  cloudfront_price_class  = var.cloudfront_price_class
+  acm_certificate_arn     = var.acm_certificate_arn  # HTTPS 인증서 ARN
 }

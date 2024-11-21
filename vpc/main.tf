@@ -181,3 +181,21 @@ resource "aws_route_table_association" "private_rds_az2" {
   subnet_id      = aws_subnet.private_rds_az2.id
   route_table_id = aws_route_table.private.id
 }
+# Route 53 Hosted Zone 생성 (도메인 관리 영역)
+resource "aws_route53_zone" "main" {
+  name = "mymain.click"  # AWS에 연결된 도메인 이름
+}
+
+# Route 53 A 레코드 생성 (도메인을 ALB로 연결)
+resource "aws_route53_record" "www" {
+  zone_id = aws_route53_zone.main.zone_id  # Hosted Zone ID를 가져옴
+  name    = "www"  # www.mymain.click 서브도메인 설정
+  type    = "A"  # IPv4 주소와 연결하는 A 레코드
+
+  # ALB와 Alias로 연결
+  alias {
+    name                   = aws_lb.alb.dns_name  # ALB의 DNS 이름
+    zone_id                = aws_lb.alb.zone_id  # ALB의 Hosted Zone ID
+    evaluate_target_health = true  # ALB의 상태를 평가하여 라우팅
+  }
+}
