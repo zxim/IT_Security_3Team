@@ -11,7 +11,6 @@ module "vpc" {
   private_web_subnet_cidr_az2 = var.private_web_subnets[1]
   private_rds_subnet_cidr_az1 = var.private_rds_subnets[0]
   private_rds_subnet_cidr_az2 = var.private_rds_subnets[1]
-  ssh_key_name               = var.ssh_key_name
   environment                = var.environment
 }
 
@@ -35,7 +34,9 @@ module "compute" {
   security_group_web     = module.security.web_sg
   security_group_bastion = module.security.bastion_sg
   security_group_app     = module.security.app_sg
-  ssh_key_name           = var.ssh_key_name
+  ssh_key_name_bastion  = var.ssh_key_name_bastion
+  ssh_key_name_web      = var.ssh_key_name_web
+  ssh_key_name_app      = var.ssh_key_name_app
   environment            = var.environment
 }
 

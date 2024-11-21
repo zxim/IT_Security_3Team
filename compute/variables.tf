@@ -31,7 +31,17 @@ variable "security_group_app" {
 }
 
 # 기타 변수
-variable "ssh_key_name" {
+variable "ssh_key_name_bastion" {
+  description = "The SSH key pair name used for accessing EC2 instances"
+  type        = string
+}
+
+variable "ssh_key_name_web" {
+  description = "The SSH key pair name used for accessing EC2 instances"
+  type        = string
+}
+
+variable "ssh_key_name_app" {
   description = "The SSH key pair name used for accessing EC2 instances"
   type        = string
 }

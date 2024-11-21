@@ -39,15 +39,23 @@ resource "aws_security_group" "web" {
   ingress {
     from_port   = 80
     to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = [var.web_subnet_ip]
+    protocol        = "tcp"
+    security_groups = [aws_security_group.bastion.id]
   }
 
   ingress {
     from_port   = 443
     to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [var.web_subnet_ip]
+    protocol        = "tcp"
+    security_groups = [aws_security_group.bastion.id]
+  }
+
+  # SSH 트래픽 (배스천 호스트만 허용)
+  ingress {
+    from_port                = 22
+    to_port                  = 22
+    protocol                 = "tcp"
+    security_groups          = [aws_security_group.bastion.id]
   }
 
   egress {
@@ -71,15 +79,23 @@ resource "aws_security_group" "app" {
   ingress {
     from_port   = 80
     to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = [var.app_subnet_ip]
+    protocol        = "tcp"
+    security_groups = [aws_security_group.web.id]
   }
 
   ingress {
     from_port   = 443
     to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [var.app_subnet_ip]
+    protocol        = "tcp"
+    security_groups = [aws_security_group.web.id]
+  }
+
+  # SSH 트래픽 (배스천 호스트만 허용)
+  ingress {
+    from_port                = 22
+    to_port                  = 22
+    protocol                 = "tcp"
+    security_groups          = [aws_security_group.bastion.id]
   }
 
   egress {
@@ -101,10 +117,10 @@ resource "aws_security_group" "rds" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = [var.app_subnet_ip]
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.app.id]
   }
 
   egress {

@@ -23,11 +23,6 @@ variable "private_rds_subnet_cidr_az2" {
   type        = string
 }
 
-variable "ssh_key_name" {
-  description = "SSH key pair name"
-  type        = string
-}
-
 variable "environment" {
   description = "Environment name (e.g., dev, prod)"
   type        = string

@@ -20,7 +20,17 @@ variable "environment" {
 }
 
 # SSH Key Name
-variable "ssh_key_name" {
+variable "ssh_key_name_bastion" {
+  description = "SSH key pair name"
+  type        = string
+}
+
+variable "ssh_key_name_web" {
+  description = "SSH key pair name"
+  type        = string
+}
+
+variable "ssh_key_name_app" {
   description = "SSH key pair name"
   type        = string
 }
