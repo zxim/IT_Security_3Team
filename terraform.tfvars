@@ -16,6 +16,8 @@ acm_certificate_arn = "arn:aws:acm:<region>:<account-id>:certificate/<certificat
 # S3 로그 버킷
 s3_logging_bucket = "your-s3-logging-bucket-name"  # S3 로그 버킷 이름 입력
 
+ # 실제 사용할 Route 53 도메인 이름
+route53_domain_name = "example.com" 
 
 # 환경 이름
 environment = "dev"

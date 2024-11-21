@@ -131,9 +131,3 @@ variable "alb_arn" {
   description = "The ARN of the Application Load Balancer"
   type        = string
 }
-
-# CloudFront Distribution ID
-variable "cloudfront_distribution_id" {
-  description = "The ID of the CloudFront Distribution"
-  type        = string
-}

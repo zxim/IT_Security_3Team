@@ -19,25 +19,3 @@ variable "environment" {
   description = "Environment name (e.g., dev, staging, prod)"
   type        = string
 }
-
-variable "acm_certificate_arn" {
-  description = "ARN of the ACM certificate for HTTPS"
-  type        = string
-}
-
-variable "s3_logging_bucket" {
-  description = "S3 bucket for CloudFront logs"
-  type        = string
-}
-
-# ALB ARN 추가 (Main.tf에서 전달)
-variable "alb_arn" {
-  description = "ARN of the Application Load Balancer"
-  type        = string
-}
-# CloudFront Price Class
-variable "cloudfront_price_class" {
-  description = "CloudFront price class (e.g., PriceClass_100, PriceClass_200, PriceClass_All)"
-  type        = string
-  default     = "PriceClass_100"
-}

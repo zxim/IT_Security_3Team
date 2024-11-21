@@ -229,6 +229,6 @@ resource "aws_wafv2_web_acl" "waf" {
 
 # WAF ACL을 ALB에 연결
 resource "aws_wafv2_web_acl_association" "waf_alb" {
-  resource_arn = aws_alb.app.arn  # ALB의 ARN (위에 정의된 ALB 리소스와 연결)
+  resource_arn = var.alb_arn  # ALB의 ARN (위에 정의된 ALB 리소스와 연결)
   web_acl_arn  = aws_wafv2_web_acl.waf.arn  # 생성한 WAF ACL의 ARN
 }

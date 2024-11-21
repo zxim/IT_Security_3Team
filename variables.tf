@@ -125,3 +125,11 @@ variable "s3_logging_bucket" {
   description = "S3 bucket for CloudFront logs"
   type        = string
 }
+variable "route53_domain_name" {
+  description = "Domain name for Route 53"
+  type        = string
+}
+variable "alb_arn" {
+  description = "The ARN of the ALB"
+  type        = string
+}
