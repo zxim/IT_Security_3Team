@@ -121,3 +121,7 @@ variable "waf_managed_rule_groups" {
     }
   ]
 }
+variable "s3_logging_bucket" {
+  description = "S3 bucket for CloudFront logs"
+  type        = string
+}

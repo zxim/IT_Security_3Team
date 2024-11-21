@@ -35,3 +35,9 @@ variable "alb_arn" {
   description = "ARN of the Application Load Balancer"
   type        = string
 }
+# CloudFront Price Class
+variable "cloudfront_price_class" {
+  description = "CloudFront price class (e.g., PriceClass_100, PriceClass_200, PriceClass_All)"
+  type        = string
+  default     = "PriceClass_100"
+}

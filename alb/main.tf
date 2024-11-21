@@ -32,7 +32,6 @@ resource "aws_lb_target_group" "web" {
   }
 }
 
-
 # ALB 리스너 (웹 서버로 트래픽 전달)
 resource "aws_alb_listener" "http" {
   load_balancer_arn = aws_alb.app.arn
@@ -41,7 +40,7 @@ resource "aws_alb_listener" "http" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.web.arn 
+    target_group_arn = aws_lb_target_group.web.arn
   }
 }
 
@@ -50,7 +49,7 @@ resource "random_id" "suffix" {
   byte_length = 4
 }
 
-
+# CloudFront 배포 생성
 resource "aws_cloudfront_distribution" "cdn" {
   # Origin 설정 (ALB와 연결)
   origin {
@@ -78,31 +77,31 @@ resource "aws_cloudfront_distribution" "cdn" {
     }
   }
 
-  # HTTPS 설정 (viewer_certificate 블록 추가)
+  # HTTPS 설정 (viewer_certificate 블록)
   viewer_certificate {
     acm_certificate_arn = var.acm_certificate_arn  # ACM 인증서 ARN
     ssl_support_method  = "sni-only"  # SNI 방식 사용
     minimum_protocol_version = "TLSv1.2_2021"  # 최소 프로토콜 버전
   }
 
+  # CloudFront 로그 설정
+  logging_config {
+    include_cookies = false
+    bucket          = var.s3_logging_bucket  # CloudFront 로그를 저장할 S3 버킷
+    prefix          = "cloudfront-logs/"
+  }
+
   # 배포 설정
   enabled         = true
   is_ipv6_enabled = true
-  price_class     = "PriceClass_100"  # 사용할 CloudFront 요금 클래스 (최저 비용)
+  price_class     = var.cloudfront_price_class  # 사용할 CloudFront 요금 클래스
   default_root_object = "index.html"  # 기본 요청 경로
 
-  # Geo 제한 설정 (선택 사항)
+  # Geo 제한 설정
   restrictions {
     geo_restriction {
       restriction_type = "none"  # 특정 국가 제한 없이 전 세계 허용
     }
-  }
-
-  # CloudFront 로그 설정 (선택 사항)
-  logging_config {
-    include_cookies = false
-    bucket          = "your-s3-logging-bucket"  # CloudFront 로그를 저장할 S3 버킷
-    prefix          = "cloudfront-logs/"
   }
 
   # 태그 추가
