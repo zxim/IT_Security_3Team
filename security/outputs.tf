@@ -1,40 +1,31 @@
-# 웹 서버 보안 그룹 출력
-output "web_sg" {
-  description = "Security group ID for web servers"
-  value       = aws_security_group.web.id
-}
-
-# 배스천 호스트 보안 그룹 출력
-output "bastion_sg" {
-  description = "Security group ID for the bastion host"
-  value       = aws_security_group.bastion.id
-}
-
-# NAT 인스턴스 보안 그룹 출력
-output "nat_sg" {
-  description = "Security group ID for the NAT instance"
-  value       = aws_security_group.nat.id
-}
-
-# IDS/IPS 보안 그룹 출력
-output "ids_sg" {
-  description = "Security group ID for IDS/IPS instances"
-  value       = aws_security_group.ids.id
-}
-
-# ALB 보안 그룹 출력
+# ALB Security Group ID 출력
 output "alb_sg" {
-  description = "Security group ID for the Application Load Balancer"
-  value       = aws_security_group.alb.id
+  value = aws_security_group.alb.id
 }
 
-# RDS 보안 그룹 출력
+# 웹 서버 Security Group ID 출력
+output "web_sg" {
+  value = aws_security_group.web.id
+}
+
+# RDS Security Group ID 출력
 output "rds_sg" {
-  description = "Security group ID for the RDS instance"
-  value       = aws_security_group.rds.id
+  value = aws_security_group.rds.id
 }
 
-output "rds_security_group_id" {
-  description = "Security Group ID for RDS"
-  value       = aws_security_group.rds.id
+# 애플리케이션 서버 Security Group ID 출력
+output "app_sg" {
+  description = "Application security group ID"
+  value       = aws_security_group.app.id
+}
+
+# 웹 서버에 대한 ALB HTTP 접근을 허용하는 CIDR 블록 출력
+output "web_sg_cidr" {
+  value = aws_security_group_rule.web_from_alb_http.cidr_blocks
+}
+
+# Bastion 보안 그룹 출력
+output "bastion_sg" {
+  description = "Security Group ID for Bastion Host"
+  value       = aws_security_group.bastion.id
 }

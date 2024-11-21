@@ -1,69 +1,79 @@
-# AWS 리전 설정
+# AWS Region
 variable "aws_region" {
-  description = "AWS 리전 (예: 서울 리전)"
+  description = "AWS region (e.g., ap-northeast-2 for Seoul)"
   type        = string
   default     = "ap-northeast-2"
 }
 
-# VPC CIDR 설정
+# VPC CIDR
 variable "vpc_cidr" {
-  description = "VPC의 CIDR 블록"
+  description = "CIDR block for the VPC"
   type        = string
   default     = "192.168.0.0/16"
 }
 
-# 환경 태그
+# Environment
 variable "environment" {
-  description = "리소스 태그 환경 (예: dev, staging, prod)"
+  description = "Environment tag (e.g., dev, staging, prod)"
   type        = string
   default     = "dev"
 }
 
-# SSH 키 이름
+# SSH Key Name
 variable "ssh_key_name" {
-  description = "SSH 키 페어 이름"
+  description = "SSH key pair name"
   type        = string
 }
 
-# 퍼블릭 서브넷
+# Public Subnets
 variable "public_subnets" {
-  description = "퍼블릭 서브넷 CIDR 블록"
+  description = "Public subnet CIDR blocks"
   type        = list(string)
-  default     = [
-    "192.168.1.0/24",
-    "192.168.4.0/24"
-  ]
+  default     = ["192.168.1.0/24", "192.168.4.0/24"]
 }
 
-# 프라이빗 웹 서버 서브넷
+# Private Web Subnets
 variable "private_web_subnets" {
-  description = "웹 서버를 위한 프라이빗 서브넷 CIDR 블록"
+  description = "Private subnet CIDR blocks for web servers"
   type        = list(string)
-  default     = [
-    "192.168.2.0/24",
-    "192.168.5.0/24"
-  ]
+  default     = ["192.168.2.0/24", "192.168.5.0/24"]
 }
 
-# 프라이빗 RDS 서브넷
+# Private RDS Subnets
 variable "private_rds_subnets" {
-  description = "RDS를 위한 프라이빗 서브넷 CIDR 블록"
+  description = "Private subnet CIDR blocks for RDS"
   type        = list(string)
-  default     = [
-    "192.168.3.0/24",
-    "192.168.6.0/24"
-  ]
+  default     = ["192.168.3.0/24", "192.168.6.0/24"]
 }
 
-# 데이터베이스 사용자 이름
+# Database Username
 variable "db_username" {
-  description = "RDS 사용자 이름"
+  description = "Username for the RDS instance"
   type        = string
 }
 
-# 데이터베이스 비밀번호
+# Database Password
 variable "db_password" {
-  description = "RDS 사용자 비밀번호"
+  description = "Password for the RDS instance"
   type        = string
   sensitive   = true
+}
+
+# SSH Access CIDR
+variable "allowed_ssh_cidr" {
+  description = "Allowed CIDR block for SSH access"
+  type        = string
+  default     = "0.0.0.0/0"
+}
+
+variable "alb_http_port" {
+  description = "Port for ALB HTTP traffic"
+  type        = number
+  default     = 80
+}
+
+variable "alb_https_port" {
+  description = "Port for ALB HTTPS traffic"
+  type        = number
+  default     = 443
 }

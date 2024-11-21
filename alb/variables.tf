@@ -1,4 +1,5 @@
 # ALB 관련 변수 정의
+
 variable "public_subnets" {
   description = "퍼블릭 서브넷 ID 목록"
   type        = list(string)
@@ -13,4 +14,7 @@ variable "vpc_id" {
   type        = string
 }
 
-
+variable "environment" {
+  description = "Environment name (e.g., dev, prod)"
+  type        = string
+}

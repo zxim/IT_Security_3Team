@@ -20,19 +20,13 @@ variable "security_group_web" {
   type        = string
 }
 
-
-variable "security_group_nat" {
-  description = "The security group for NAT instance"
-  type        = string
-}
-
 variable "security_group_bastion" {
   description = "The security group for Bastion host"
   type        = string
 }
 
-variable "security_group_ids" {
-  description = "The security group for IDS/IPS"
+variable "security_group_app" {
+  description = "Application server security group ID"
   type        = string
 }
 
@@ -43,7 +37,7 @@ variable "ssh_key_name" {
 }
 
 variable "web_instance_type" {
-  description = "Instance type for web servers"
+  description = "Instance type for web servers and application servers"
   type        = string
   default     = "t3.micro"
 }
@@ -53,3 +47,4 @@ variable "environment" {
   type        = string
   default     = "dev"
 }
+
