@@ -79,10 +79,10 @@ output "cloudfront_domain_name" {
 # WAF Outputs (Updated)
 output "waf_acl_arn" {
   description = "The ARN of the WAF ACL"
-  value       = module.security.waf_acl_arn  # security 모듈에서 가져오기
+  value       = module.security.waf_acl_arn # security 모듈에서 가져오기
 }
 
 output "waf_alb_association" {
   description = "The ID of the WAF association with ALB"
-  value       = module.security.waf_alb_association  # security 모듈에서 가져오기
+  value       = module.security.waf_alb_association # security 모듈에서 가져오기
 }

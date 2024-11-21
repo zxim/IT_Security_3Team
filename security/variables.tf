@@ -131,3 +131,9 @@ variable "alb_arn" {
   description = "The ARN of the Application Load Balancer"
   type        = string
 }
+
+# SNS Topic ARN
+variable "sns_topic_arn" {
+  description = "ARN of the SNS Topic for CloudWatch Alarms"
+  type        = string
+}

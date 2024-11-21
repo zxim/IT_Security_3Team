@@ -106,7 +106,7 @@ variable "waf_acl_name" {
 
 variable "waf_managed_rule_groups" {
   description = "List of WAF managed rule groups"
-  type        = list(object({
+  type = list(object({
     name        = string
     vendor_name = string
   }))
@@ -131,5 +131,9 @@ variable "route53_domain_name" {
 }
 variable "alb_arn" {
   description = "The ARN of the ALB"
+  type        = string
+}
+variable "sns_topic_arn" {
+  description = "ARN of the SNS Topic for CloudWatch Alarms"
   type        = string
 }

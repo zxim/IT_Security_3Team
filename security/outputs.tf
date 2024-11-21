@@ -41,3 +41,18 @@ output "waf_alb_association" {
   description = "Association of WAF ACL with ALB"
   value       = aws_wafv2_web_acl_association.waf_alb.id
 }
+
+output "guardduty_detector_id" {
+  description = "ID of the GuardDuty Detector"
+  value       = aws_guardduty_detector.main.id
+}
+
+output "cloudwatch_log_group_name" {
+  description = "Name of the CloudWatch Log Group for GuardDuty"
+  value       = aws_cloudwatch_log_group.guardduty_log.name
+}
+
+output "sns_topic_arn" {
+  description = "ARN of the SNS Topic for CloudWatch Alarms"
+  value       = var.sns_topic_arn
+}

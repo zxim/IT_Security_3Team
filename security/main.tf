@@ -232,3 +232,48 @@ resource "aws_wafv2_web_acl_association" "waf_alb" {
   resource_arn = var.alb_arn  # ALB의 ARN (위에 정의된 ALB 리소스와 연결)
   web_acl_arn  = aws_wafv2_web_acl.waf.arn  # 생성한 WAF ACL의 ARN
 }
+
+
+
+
+# Add this at the end of the file
+resource "aws_guardduty_detector" "main" {
+  enable = true
+}
+
+resource "aws_guardduty_publishing_destination" "main" {
+  detector_id     = aws_guardduty_detector.main.id
+  destination_arn = aws_cloudwatch_log_group.guardduty_log.arn
+  kms_key_arn     = aws_kms_key.guardduty_log_key.arn
+}
+
+resource "aws_cloudwatch_log_group" "guardduty_log" {
+  name = "/aws/guardduty/logs"
+}
+
+resource "aws_cloudwatch_metric_alarm" "guardduty_alarm" {
+  alarm_name          = "GuardDutyFindingsAlarm"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  metric_name         = "GuardDutyFindings"
+  namespace           = "AWS/GuardDuty"
+  period              = 300
+  statistic           = "Sum"
+  threshold           = 1
+  alarm_actions       = [var.sns_topic_arn] # Reference to sns_topic_arn variable
+}
+
+resource "aws_securityhub_account" "main" {}
+
+resource "aws_securityhub_standards_subscription" "cis" {
+  standards_arn = "arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0"
+}
+
+resource "aws_kms_key" "guardduty_log_key" {
+  description             = "KMS key for encrypting GuardDuty logs"
+  deletion_window_in_days = 30
+
+  tags = {
+    Name = "${var.environment}-guardduty-log-key"
+  }
+}
