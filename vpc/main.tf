@@ -19,7 +19,8 @@ data "aws_internet_gateway" "existing" {
 
 # 인터넷 게이트웨이 (조건부 생성)
 resource "aws_internet_gateway" "main" {
-  count = length(data.aws_internet_gateway.existing.id) == 0 ? 1 : 0
+  # count = length(data.aws_internet_gateway.existing.id) == 0 ? 1 : 0
+  count = 1
   vpc_id = aws_vpc.main.id
 
   tags = {

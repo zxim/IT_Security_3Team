@@ -1,4 +1,5 @@
 provider "aws" {
+  profile = "terraform-user"
   region = var.aws_region
 }
 
@@ -57,4 +58,9 @@ module "rds" {
   private_rds_az2    = module.vpc.private_rds_subnet_az2_id
   db_username        = var.db_username
   db_password        = var.db_password
+}
+
+module "log" {
+  source = "./log"
+  aws_region = var.aws_region
 }
