@@ -57,6 +57,8 @@ resource "aws_cloudtrail" "main" {
   include_global_service_events = true
   is_multi_region_trail         = true
   enable_log_file_validation    = true
+  cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.cloudtrail_logs.arn}:*"
+  cloud_watch_logs_role_arn     = aws_iam_role.cloudtrail_cloudwatch_role.arn
 
   event_selector {
     read_write_type           = "All"
@@ -107,6 +109,47 @@ resource "aws_s3_bucket_policy" "cloudtrail" {
             "s3:x-amz-acl" = "bucket-owner-full-control"
           }
         }
+      }
+    ]
+  })
+}
+
+resource "aws_cloudwatch_log_group" "cloudtrail_logs" {
+  name = "/aws/cloudtrail/main-trail"
+  retention_in_days = 90
+}
+
+resource "aws_iam_role" "cloudtrail_cloudwatch_role" {
+  name = "cloudtrail-cloudwatch-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudtrail.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "cloudtrail_cloudwatch_policy" {
+  name = "cloudtrail-cloudwatch-policy"
+  role = aws_iam_role.cloudtrail_cloudwatch_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Resource = "${aws_cloudwatch_log_group.cloudtrail_logs.arn}:*"
       }
     ]
   })
