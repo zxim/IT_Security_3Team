@@ -76,3 +76,16 @@ module "cloudfront" {
   acm_certificate_arn    = var.acm_certificate_arn
   s3_logging_bucket      = var.s3_logging_bucket # S3 로그 버킷 이름 추가
 }
+module "route53" {
+  source              = "./route53"
+  route53_domain_name = var.route53_domain_name
+  alb_dns_name        = module.alb.alb_dns_name
+  alb_zone_id         = module.alb.alb_zone_id
+}
+
+module "waf" {
+  source    = "./waf"
+  waf_acl_name       = var.waf_acl_name
+  waf_acl_metric_name = var.waf_acl_metric_name
+  alb_arn            = module.alb.alb_arn
+}

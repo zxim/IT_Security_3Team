@@ -121,18 +121,32 @@ variable "waf_managed_rule_groups" {
     }
   ]
 }
+
+variable "waf_acl_metric_name" {
+  description = "Metric name for WAF ACL"
+  type        = string
+  default     = "web-acl-metrics"
+}
+
+# S3 Bucket for Logs
 variable "s3_logging_bucket" {
   description = "S3 bucket for CloudFront logs"
   type        = string
 }
+
+# Route 53 Domain Name
 variable "route53_domain_name" {
   description = "Domain name for Route 53"
   type        = string
 }
+
+# ALB ARN
 variable "alb_arn" {
-  description = "The ARN of the ALB"
+  description = "The ARN of the Application Load Balancer"
   type        = string
 }
+
+# SNS Topic ARN
 variable "sns_topic_arn" {
   description = "ARN of the SNS Topic for CloudWatch Alarms"
   type        = string
