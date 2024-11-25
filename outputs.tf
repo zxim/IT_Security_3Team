@@ -86,3 +86,12 @@ output "waf_alb_association" {
   description = "The ID of the WAF association with ALB"
   value       = module.security.waf_alb_association # security 모듈에서 가져오기
 }
+output "cloudtrail_bucket_arn" {
+  description = "CloudTrail S3 Bucket ARN"
+  value       = module.cloudtrail.cloudtrail_bucket_arn
+}
+
+output "cloudtrail_log_group_name" {
+  description = "CloudTrail Log Group Name"
+  value       = module.cloudtrail.cloudtrail_log_group_name
+}

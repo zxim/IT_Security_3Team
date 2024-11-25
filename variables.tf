@@ -151,3 +151,7 @@ variable "sns_topic_arn" {
   description = "ARN of the SNS Topic for CloudWatch Alarms"
   type        = string
 }
+variable "cloudtrail_cloudwatch_role_arn" {
+  description = "IAM Role ARN for CloudTrail to send logs to CloudWatch"
+  type        = string
+}

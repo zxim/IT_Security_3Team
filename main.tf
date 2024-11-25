@@ -89,3 +89,8 @@ module "waf" {
   waf_acl_metric_name = var.waf_acl_metric_name
   alb_arn            = module.alb.alb_arn
 }
+module "cloudtrail" {
+  source                       = "./cloudtrail"
+  environment                  = var.environment
+  cloudtrail_cloudwatch_role_arn = "<IAM Role ARN>" # CloudTrail -> CloudWatch 연결 역할
+}
