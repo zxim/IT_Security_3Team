@@ -64,3 +64,11 @@ output "rds_security_group_id" {
   description = "The security group ID for the RDS instance"
   value       = module.security.rds_sg
 }
+
+output "waf_web_acl_id" {
+  value = module.waf.web_acl_id
+}
+
+output "waf_web_acl_name" {
+  value = module.waf.web_acl_name
+}

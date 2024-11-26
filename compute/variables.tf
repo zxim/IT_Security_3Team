@@ -49,7 +49,7 @@ variable "ssh_key_name_app" {
 variable "web_instance_type" {
   description = "Instance type for web servers and application servers"
   type        = string
-  default     = "t3.micro"
+  default     = "t3.large"
 }
 
 variable "environment" {

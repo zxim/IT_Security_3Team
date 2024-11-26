@@ -44,9 +44,14 @@ module "alb" {
   source             = "./alb"
   vpc_id             = module.vpc.vpc_id
   public_subnets     = [module.vpc.public_subnet_az1_id, module.vpc.public_subnet_az2_id]
-  security_group_alb = module.security.alb_sg
+  security_group_alb = module.security.alb_sg 
   environment        = var.environment
+  ssl_certificate_arn = var.ssl_certificate_arn
+  route53_zone_id    = var.route53_zone_id
+  domain_name        = var.domain_name
 }
+
+
 
 module "rds" {
   source             = "./rds"
@@ -57,4 +62,11 @@ module "rds" {
   private_rds_az2    = module.vpc.private_rds_subnet_az2_id
   db_username        = var.db_username
   db_password        = var.db_password
+}
+
+module "waf" {
+  source              = "./waf"
+  alb_arn             = module.alb.alb_arn
+  ssl_certificate_arn = var.ssl_certificate_arn
+  domain_name         = var.domain_name
 }

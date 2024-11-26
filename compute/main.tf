@@ -18,6 +18,12 @@ resource "aws_instance" "web1" {
   subnet_id             = var.public_subnet[0]
   key_name              = var.ssh_key_name_web
   vpc_security_group_ids = [var.security_group_web]
+
+  root_block_device {
+    volume_size = 20
+    volume_type = "gp3"
+  }
+
   tags = {
     Name = "${var.environment}-web1"
   }

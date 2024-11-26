@@ -87,3 +87,52 @@ variable "alb_https_port" {
   type        = number
   default     = 443
 }
+
+variable "waf_domain_name" {
+  description = "The domain name to use with WAF"
+  type        = string
+  default     = "mymain.click"
+}
+
+
+variable "visibility_config" {
+  description = "Visibility config for WAF"
+  type = object({
+    cloudwatch_metrics_enabled = bool
+    metric_name               = string
+    sampled_requests_enabled  = bool
+  })
+  default = {
+    cloudwatch_metrics_enabled = true
+    metric_name               = "example-metric"
+    sampled_requests_enabled  = true
+  }
+}
+
+variable "ssl_certificate_arn" {
+  description = "The ARN of the SSL certificate for HTTPS"
+  type        = string
+}
+
+variable "security_group_alb" {
+  description = "The security group for the ALB"
+  type        = string
+}
+
+variable "domain_name" {
+  description = "Domain name for the application"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
+
+variable "route53_zone_id" {
+  description = "Route 53 hosted zone ID"
+  type        = string
+}
+
+
+
